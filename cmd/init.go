@@ -7,8 +7,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var force bool
-var template string
+type TypePropertyInit struct {
+	force    bool
+	template string
+}
+
+var propertyInit = &TypePropertyInit{}
 
 var configFmt = `---
 template: %s
@@ -19,9 +23,6 @@ You can now start to create your content.
 
 # Second slide for %[1]v
 `
-
-// initCmd represents the init command
-var initCmd = createInitCommand()
 
 func createInitCommand() *cobra.Command {
 	cmd := &cobra.Command{
@@ -34,19 +35,25 @@ func createInitCommand() *cobra.Command {
 		},
 	}
 
+	cmd.Flags().StringVarP(&propertyInit.template, "template", "t", "", "Template to bootstrap the presentation.")
+	cmd.Flags().BoolVarP(&propertyInit.force, "force", "f", false, "Force re-creation of config file")
+
 	return cmd
 }
 
 func init() {
-	rootCmd.AddCommand(initCmd)
-	initCmd.Flags().StringVarP(&ConfUser.Template, "template", "t", "default", "Template to bootstrap the presentation.")
-	initCmd.Flags().BoolVarP(&force, "force", "f", false, "Force re-creation of config file")
+	rootCmd.AddCommand(createInitCommand())
 }
 
 func execInitCommand(cmd *cobra.Command, args []string) error {
 	target := args[0]
 	cfgFile := fmt.Sprintf("%s/.gopress.yaml", target)
 	slides := fmt.Sprintf("%s/slides.md", target)
+
+	if propertyInit.template == "" {
+		// use default from config
+		propertyInit.template = ConfUser.Template
+	}
 
 	cDefault(os.Stdout, "[ - ] Creating skeleton inside folder %s...\n", target)
 	if _, err := os.Stat(target); err != nil {
@@ -55,14 +62,14 @@ func execInitCommand(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	if _, err := os.Stat(cfgFile); err != nil || force {
+	if _, err := os.Stat(cfgFile); err != nil || propertyInit.force {
 		f, err := os.Create(cfgFile)
 		if err != nil {
 			return err
 		}
 		defer f.Close()
 
-		fmt.Fprintf(f, configFmt, template)
+		fmt.Fprintf(f, configFmt, propertyInit.template)
 
 		cSuccess(os.Stdout, "[ + ] Generated config file %s.\n", cfgFile)
 	} else {
