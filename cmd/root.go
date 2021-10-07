@@ -12,8 +12,8 @@ var rootCmd = createRootCommand()
 func createRootCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "gopress",
-		Short: "Gopress helps you building impressive, offline-capable presentations using Markdown and impress.js.",
-		Long:  `Gopress will enable you to build exciting and modern presentations using impress.js by doing the thing that feels the most natural to us developers: coding.`,
+		Short: "Gopress is a CLI to create exciting and modern presentation using just code.",
+		Long:  `Gopress is a CLI to create exciting and modern presentation using just code. Present your ideas, visions and thoughts with impress.js using simple Markdown and some configuration.`,
 	}
 
 	// OnInitialize appends the passed function to initializers to be run when
