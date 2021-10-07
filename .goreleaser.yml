@@ -1,0 +1,50 @@
+env:
+  - GO111MODULE=on
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin    
+    binary: gopress
+archives:
+  - replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+    
+    files:
+      - LICENSE
+      - README.md
+      - .gopress.sample.yaml
+dockers:
+  - goos: linux
+    goarch: amd64
+    goarm: ''
+    image_templates:
+    - "ghcr.io/schaermu/gopress:latest"
+    - "ghcr.io/schaermu/gopress:{{ .Tag }}"
+    build_flag_templates:
+    - "--pull"
+    - "--label=org.opencontainers.image.source={{.GitURL}}"
+    - "--label=org.opencontainers.image.created={{.Date}}"
+    - "--label=org.opencontainers.image.title={{.ProjectName}}"
+    - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+    - "--label=org.opencontainers.image.version={{.Version}}"
+    - "--platform=linux/amd64"
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
