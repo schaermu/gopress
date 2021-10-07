@@ -55,7 +55,7 @@ func execInitCommand(cmd *cobra.Command, args []string) error {
 		propertyInit.template = ConfUser.Template
 	}
 
-	cDefault(os.Stdout, "[ - ] Creating skeleton inside folder %s...\n", target)
+	cDefault(os.Stdout, "[ - ] Creating skeleton inside folder %q...\n", target)
 	if _, err := os.Stat(target); err != nil {
 		if err := os.MkdirAll(fmt.Sprintf("%s/images", target), 0755); err != nil {
 			return err
@@ -71,7 +71,7 @@ func execInitCommand(cmd *cobra.Command, args []string) error {
 
 		fmt.Fprintf(f, configFmt, propertyInit.template)
 
-		cSuccess(os.Stdout, "[ + ] Generated config file %s.\n", cfgFile)
+		cSuccess(os.Stdout, "[ + ] Generated config file %q.\n", cfgFile)
 	} else {
 		cDefault(os.Stdout, "[ - ] Config already exists, skipping init (use -f to overwrite)...\n")
 	}
@@ -84,7 +84,7 @@ func execInitCommand(cmd *cobra.Command, args []string) error {
 		defer f.Close()
 
 		fmt.Fprintf(f, slidesFmt, target)
-		cSuccess(os.Stdout, "[ + ] Generated slides file %s.\n", slides)
+		cSuccess(os.Stdout, "[ + ] Generated slides file %q.\n", slides)
 	} else {
 		cDefault(os.Stdout, "[ - ] Slides already existing, skipping init...\n")
 	}
