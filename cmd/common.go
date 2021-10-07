@@ -1,11 +1,15 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 
+	"github.com/fatih/color"
 	"github.com/schaermu/gopress/conf"
 )
+
+var cDefault = color.New(color.FgWhite).FprintfFunc()
+var cError = color.New(color.FgHiRed).FprintfFunc()
+var cSuccess = color.New(color.FgHiGreen).FprintfFunc()
 
 const (
 	// SUCCESS is an alias of exit status code to ease read.
@@ -22,7 +26,7 @@ var osExit = os.Exit
 // It does nothing if the error is nil and returns 0.
 func EchoStdErrIfError(err error) int {
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		cError(os.Stderr, "%v", err)
 
 		return FAILURE
 	}

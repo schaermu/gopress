@@ -3,14 +3,9 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/fatih/color"
 	"github.com/schaermu/gopress/conf"
 	"github.com/spf13/cobra"
 )
-
-var cDefault = color.New(color.FgWhite).PrintfFunc()
-var cError = color.New(color.FgHiRed).PrintfFunc()
-var cSuccess = color.New(color.FgHiGreen).PrintfFunc()
 
 var rootCmd = createRootCommand()
 
