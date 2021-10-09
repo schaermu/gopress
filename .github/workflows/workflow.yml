@@ -1,4 +1,4 @@
-name: goreleaser
+name: build-release
 
 on:
   pull_request:
@@ -20,6 +20,9 @@ jobs:
 
       - name: Run coverage
         run: go test -race -coverprofile=coverage.out -covermode=atomic
+
+      - name: Upload coverage to Codecov
+        run: bash <(curl -s https://codecov.io/bash)
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
