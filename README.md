@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/schaermu/gopress/tree/main.svg?style=shield)](https://circleci.com/gh/schaermu/gopress/tree/main) [![codecov](https://codecov.io/gh/schaermu/gopress/branch/main/graph/badge.svg?token=P83Z3KCN0T)](https://codecov.io/gh/schaermu/gopress)
+[![codecov](https://codecov.io/gh/schaermu/gopress/branch/main/graph/badge.svg?token=P83Z3KCN0T)](https://codecov.io/gh/schaermu/gopress)
 [![Go Report Card](https://goreportcard.com/badge/github.com/schaermu/gopress)](https://goreportcard.com/report/github.com/schaermu/gopress)
 
 # gopress - a presentation builder CLI for developers
