@@ -5,7 +5,7 @@ on:
   push:
 
 jobs:
-  goreleaser:
+  build-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
